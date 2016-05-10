@@ -13,13 +13,14 @@
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ['middleware' => 'api.auth', 'providers' => 'jwt', 'prefix' => '/api/v1/'], function($api)
+$api->version('v1', ['middleware' => 'jwt.auth', 'prefix' => '/api/v1/'], function($api)
 {
     $api->resource('lessons', 'App\Http\Controllers\LessonsController');
 });
 
-$api->version('v1', [], function ($api){
+$api->version('v1', ['middleware' => 'cors'], function ($api){
     $api->post('auth/login', 'App\Http\Controllers\AuthenticateController@login');
     $api->post('auth/signup', 'App\Http\Controllers\AuthenticateController@signup');
 });
 
+//'api.auth', 'providers'
